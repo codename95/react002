@@ -1,11 +1,30 @@
 import  React,  { useEffect, useState } from "react";
 
 function Home() {
-  const [todos, setTodos] = useState([]);
+ 
+  useEffect(() => {
+    const fetchQuote = async() => 
+    fetch("https://type.fit/api/quotes") // Replace "API_ENDPOINT" with the actual API endpoint
+      .then((response) => response.json())
+      .then((data) => {
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomQuote = data[randomIndex];
+        setQuote(randomQuote.text);
+        setAuthor(randomQuote.author);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
 
+     fetchQuote();
+  }, []);
+
+  const [todos, setTodos] = useState([]);
   const [title, setNewTodo] = useState("");
   const [description, setDescription] = useState("");
   const [isUrgent, setIsUrgent] = useState(false);
+  const [quote, setQuote] = useState('');
+  const [author, setAuthor] = useState('');
+
+
 
   // Load todos from localStorage on component mount
   useEffect(() => {
@@ -14,8 +33,6 @@ function Home() {
      setTodos(storedTodos);
     }
   }, []);
-
-
 
   const handleAddTodo = (e) => {
     e.preventDefault();
@@ -140,10 +157,10 @@ function Home() {
           <div className="row m-bottom">
             <figure className="text-center">
               <blockquote className="blockquote">
-                <p>A well-known quote, contained in a blockquote element.</p>
+                <p>{quote}</p>
               </blockquote>
               <figcaption className="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
+                Someone famous in <cite title="Source Title">{author}</cite>
               </figcaption>
             </figure>
           </div>

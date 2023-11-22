@@ -1,5 +1,7 @@
 # React + Vite
 
+This application makes api calls to get quotes, tests my knowledge of hooks and more.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
